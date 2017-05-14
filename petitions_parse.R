@@ -29,7 +29,8 @@ start_point_ids = d2 %>% select(id, created_at) %>% unique() %>% filter(created_
 start_point_rows = d2 %>% filter(id %in% start_point_ids) %>% group_by(id) %>% filter(date == min(date)) %>% 
   mutate(date = created_at, signature_count = 1) %>% ungroup() %>% select(id, date, signature_count)
 
-timelines = rbind(timelines, start_point_rows) %>% arrange(date)
+timelines = rbind(timelines, start_point_rows) %>% arrange(date) %>% 
+  split(.$id) %>% lapply(function(i) i %>% select(-id))
 
 sink('../petition_timelines.json')
 cat(toJSON(timelines, 'columns'))
@@ -40,7 +41,7 @@ sink()
 d3 = d2 %>% group_by(id) %>% filter(date == max(date)) %>% select(-type, -links.self, -state)
 write.table(d3, '../petition_attributes.csv', row.names = F, col.names = T, sep=',')
 
-
+# PARSE JSON
 # jj = fromJSON('../timelines.json')
 # 
 # # parse timeline json
