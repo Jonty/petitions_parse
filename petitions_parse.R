@@ -39,7 +39,8 @@ sink()
 # attribute data
 
 d3 = d2 %>% group_by(id) %>% filter(date == max(date)) %>% select(-type, -links.self, -state)
-write.table(d3, '../petition_attributes.csv', row.names = F, col.names = T, sep=',')
+
+write.table(d3, '../petition_attributes.csv', row.names = F, col.names = T, sep=',', qmethod = 'd')
 
 # PARSE JSON
 # jj = fromJSON('../timelines.json')
