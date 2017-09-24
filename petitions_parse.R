@@ -1,7 +1,8 @@
 require(tidyverse)
 require(jsonlite)
+require(stringr)
 
-setwd('~/Documents/data/petitions_parse/data')
+setwd('~/Documents/github/petitions_parse/data')
 
 j = list.files()[str_detect(list.files(), 'json$')]
 
