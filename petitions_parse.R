@@ -4,7 +4,7 @@ require(stringr)
 
 setwd('~/Documents/github/petitions_parse/data')
 
-j = list.files()[str_detect(list.files(), 'json$')]
+j = list.files(pattern = '.json')
 
 d0 = lapply(j, function(i) list(date = as.Date(substr(i,1,10)), json = fromJSON(i, flatten = TRUE)))
 
