@@ -6,7 +6,17 @@ setwd('~/Documents/github/petitions_parse/data')
 
 j = list.files(pattern = '.json')
 
-d0 = lapply(j, function(i) list(date = as.Date(substr(i,1,10)), json = fromJSON(i, flatten = TRUE)))
+d0 = lapply(j, function(i){
+  result = tryCatch({
+    list(date = as.Date(substr(i,1,10)), json = fromJSON(i, flatten = TRUE))
+  }, error = function(e){
+    message(e)
+    return(NA)
+    })
+  return(result)
+})
+
+d0 = d0[sapply(d0, length) == 2]
 
 # extract data.frames and unite with dates
 d1 = d0 %>% lapply(function(l){
